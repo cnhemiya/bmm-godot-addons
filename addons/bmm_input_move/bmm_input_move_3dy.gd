@@ -34,7 +34,7 @@ extends Node
 @export var keep_move: bool = false
 
 ## 允许斜方向移动
-@export var mulit_move: bool = false
+@export var multi_move: bool = false
 
 # 获取父节点 CharacterBody3D
 var _parent
@@ -50,7 +50,7 @@ func _process(delta):
 	var direction: Vector3 = Vector3.ZERO
 	var is_key_pressed: bool = false
 	
-	if mulit_move:
+	if multi_move:
 		if Input.is_action_pressed(input_move_forward):
 			direction.z -= 1
 			is_key_pressed = true
