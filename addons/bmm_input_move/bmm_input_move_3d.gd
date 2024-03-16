@@ -36,13 +36,16 @@ extends Node
 ## 允许斜方向移动
 @export var multi_move: bool = true
 
+
 # 驱动节点 CharacterBody3D
-var _drive_node: CharacterBody3D = null
-var drive_node: CharacterBody3D:
+var drive_node: CharacterBody3D = null:
 	set(value):
-		_drive_node = value
+		drive_node = value
 	get:
-		return _drive_node
+		return drive_node
+
+# 保持的速度
+var _keep_velocity: Vector3 = Vector3.ZERO
 
 
 func _enter_tree():
@@ -93,6 +96,9 @@ func _process(delta):
 		target_velocity.z = direction.z * speed * delta
 		drive_node.velocity = target_velocity
 		drive_node.move_and_slide()
+		if keep_move:
+			_keep_velocity = target_velocity
 	else:
 		if keep_move:
+			drive_node.velocity = _keep_velocity
 			drive_node.move_and_slide()
