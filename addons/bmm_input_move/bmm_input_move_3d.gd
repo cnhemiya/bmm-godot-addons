@@ -34,16 +34,21 @@ extends Node
 @export var keep_move: bool = false
 
 ## 允许斜方向移动
-@export var multi_move: bool = false
+@export var multi_move: bool = true
 
-# 获取父节点 CharacterBody3D
-var _parent
+# 驱动节点 CharacterBody3D
+var _drive_node: CharacterBody3D = null
+var drive_node: CharacterBody3D:
+	set(value):
+		_drive_node = value
+	get:
+		return _drive_node
 
 
 func _enter_tree():
-	# 获取父节点 CharacterBody3D
-	_parent = get_parent() as CharacterBody3D
-
+	# 获取父级驱动节点 CharacterBody3D
+	drive_node = get_parent()
+	
 
 func _process(delta):
 	var target_velocity: Vector3 = Vector3.ZERO
@@ -80,15 +85,14 @@ func _process(delta):
 			is_key_pressed = false
 	
 	if direction != Vector3.ZERO:
-		# 速度不统一，容易卡顿
-		#direction = direction.normalized()
-		_parent.look_at(_parent.position + direction, Vector3.UP)
+		direction = direction.normalized()
+		drive_node.look_at(drive_node.position + direction, Vector3.UP)
 
 	if is_key_pressed:
 		target_velocity.x = direction.x * speed * delta
 		target_velocity.z = direction.z * speed * delta
-		_parent.velocity = target_velocity
-		_parent.move_and_slide()
+		drive_node.velocity = target_velocity
+		drive_node.move_and_slide()
 	else:
 		if keep_move:
-			_parent.move_and_slide()
+			drive_node.move_and_slide()
