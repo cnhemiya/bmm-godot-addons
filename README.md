@@ -4,4 +4,4 @@
 
 ## 插件列表
 
-- [BmmInputMove3D](/addons/bmm_input_move/README.md) 3D移动插件
+- [BmmInputMove3D](/addons/bmm_input_move/) 3D移动插件
