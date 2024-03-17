@@ -1,6 +1,6 @@
 ## BmmInputMove3D 3D移动插件
 
-- 主要帮助开发者快速实现3D移动功能，控制的父类是 CharacterBody3D
+- 主要帮助开发者快速实现3D移动功能，控制父节点 CharacterBody3D
 
 |功能|说明|
 |:--|:--|
