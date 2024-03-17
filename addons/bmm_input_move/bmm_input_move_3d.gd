@@ -24,10 +24,10 @@ extends Node
 ## 后退 Z轴-
 @export var input_move_back: String = "MOVE_BACK"
 
-## 往左 X轴-
+## 左移 X轴-
 @export var input_move_left: String = "MOVE_LEFT"
 
-## 往右 X轴+
+## 右移 X轴+
 @export var input_move_right: String = "MOVE_RIGHT"
 
 ## 保持移动
