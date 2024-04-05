@@ -16,6 +16,7 @@
 class_name BmmTscnPoolBuilder
 extends Node
 
+
 # 生成节点后的信号
 signal make_done(_node: Node)
 # 移动节点到后的信号
