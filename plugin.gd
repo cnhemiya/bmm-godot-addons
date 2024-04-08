@@ -9,7 +9,7 @@ const _bmm_3d_icon: String = "art/bmm_3d_icon.png"
 func _enter_tree():
 	# Initialization of the plugin goes here.
 	add_custom_type("BmmInputMove3D", "Node", 
-			preload("bmm_input_move/bmm_input_move_3d.gd"), preload(_bmm_3d_icon))
+			preload("bmm/bmm_input_move/bmm_input_move_3d.gd"), preload(_bmm_3d_icon))
 
 
 func _exit_tree():
