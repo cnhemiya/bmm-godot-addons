@@ -1,5 +1,6 @@
 *.import
 *.kra~
+project.godot
 
 # Godot 4+ specific ignores
 .godot/
