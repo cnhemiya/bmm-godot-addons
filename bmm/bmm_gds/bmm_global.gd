@@ -12,9 +12,9 @@
 #   repo: https://gitee.com/cnhemiya/bmm-godot-addons
 
 
-# BMM 全局函数
 class_name BmmGlobal
-extends Node
+extends RefCounted
+## BMM 全局函数
 
 
 # 获取 Node2D 节点类型实际占用的 Rect2 区域，float 类型

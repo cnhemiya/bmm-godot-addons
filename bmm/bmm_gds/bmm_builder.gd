@@ -12,9 +12,9 @@
 #   repo: https://gitee.com/cnhemiya/bmm-godot-addons
 
 
-# 一些构建器
 class_name BmmBuilder
-extends Node
+extends RefCounted
+## 一些构建器
 
 
 # 场景构建器

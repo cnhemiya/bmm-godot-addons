@@ -12,9 +12,9 @@
 #   repo: https://gitee.com/cnhemiya/bmm-godot-addons
 
 
-# 场景节点池构建器
 class_name BmmTscnPoolBuilder
-extends Node
+extends RefCounted
+## 场景节点池构建器
 
 
 # 生成节点后的信号
