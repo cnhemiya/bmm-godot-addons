@@ -19,7 +19,7 @@ extends Node
 signal move_done(position: Vector2, direction: Vector2)
 
 
-# 驱动节点 Node2D
+## 驱动节点 Node2D
 @export var drive_node: Node2D = null:
 	set(value):
 		drive_node = value
