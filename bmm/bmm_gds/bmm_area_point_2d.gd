@@ -14,27 +14,63 @@
 
 class_name BmmAreaPoint2D
 extends RefCounted
-## 记录区域点，包含 Node2D 和 Rect2 信息，
-## Rect2 记录的是真实坐标区域，符合 Node2D 信息
+## 记录区域点，包含 Node2D 的 Transform2D 信息
 
 
-# Node2D 节点
-var node: Node2D:
+# 位置
+var _position: Vector2 = Vector2(0, 0)
+var position: Vector2:
 	get:
-		return node
+		return _position
+	set(value):
+		_position = value
 
-# 区域矩形
-var rect: Rect2:
+# 旋转
+var _rotation: float = 0.0
+var rotation: float:
 	get:
-		return rect
+		return _rotation
+	set(value):
+		_rotation = value
+
+# 缩放
+var _scale: Vector2 = Vector2(1, 1)
+var scale: Vector2:
+	get:
+		return _scale
+	set(value):
+		_scale = value
+
+# 倾斜
+var _skew: float = 0.0
+var skew: float:
+	get:
+		return _skew
+	set(value):
+		_skew = value
 
 
 # 初始化
-func _init(_node: Node2D, _rect: Rect2):
-	set_all(_node, _rect)
+func _init(node: Node2D):
+	set_from_node(node)
 
 
-# 设置所有
-func set_all(_node: Node2D, _rect: Rect2):
-	node = _node
-	rect = BmmGlobal.get_node2d_rect2(_node, _rect)
+# 设置数据，来源 Node2D
+func set_from_node(node: Node2D):
+	_position = node.position
+	_rotation = node.rotation
+	_scale = node.scale
+	_skew = node.skew
+
+
+# 获取数据
+func get_data() -> BmmAreaPoint2D:
+	return self
+
+
+# 将当前的数据应用到另一个 Node2D 节点上
+func get_to_node(node: Node2D):
+	node.position = _position
+	node.rotation = _rotation
+	node.scale = _scale
+	node.skew = _skew
