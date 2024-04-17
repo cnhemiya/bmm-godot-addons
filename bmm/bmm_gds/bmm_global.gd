@@ -71,3 +71,35 @@ static func collision_shape2d_intersects(_node_a: CollisionShape2D,
 		_node_b: CollisionShape2D) -> bool:
 	return node2d_intersects(_node_a, _node_a.shape.get_rect(), _node_b, _node_b.shape.get_rect())
 
+
+# 检查计数是否在数组范围内
+static func array_check_count_ok(_array: Array, _count: int) -> bool:
+	return (_count >= 0 and _count <= _array.size())
+
+
+# 检查索引是否在数组范围内
+static func array_check_index_ok(_array: Array, _index: int) -> bool:
+	return (_index >= 0 and _index < _array.size())
+
+
+# 从数组中删除指定索引到头部的数据
+static func array_remove_to_front(_array: Array, _index: int):
+	var count = _index + 1
+	if array_check_count_ok(_array, count):
+		for i in range(count):
+			_array.pop_front()
+
+
+# 从数组中删除指定索引到尾部的数据
+static func array_remove_to_back(_array: Array, _index: int):
+	var count = _array.size() - _index
+	if array_check_count_ok(_array, count):
+		for i in range(count):
+			_array.pop_back()
+
+
+# 从数组中删除指定索引范围的数据
+static func array_remove_range(_array: Array, _index: int, _count: int):
+	if array_check_count_ok(_array, _index + _count):
+		for i in range(_count):
+			_array.remove_at(_index)
