@@ -73,33 +73,87 @@ static func collision_shape2d_intersects(_node_a: CollisionShape2D,
 
 
 # 检查计数是否在数组范围内
-static func array_check_count_ok(_array: Array, _count: int) -> bool:
-	return (_count >= 0 and _count <= _array.size())
+static func array_check_count_ok(_size: int, _count: int) -> bool:
+	return (_count >= 0 and _count <= _size)
 
 
 # 检查索引是否在数组范围内
-static func array_check_index_ok(_array: Array, _index: int) -> bool:
-	return (_index >= 0 and _index < _array.size())
+static func array_check_index_ok(_size: int, _index: int) -> bool:
+	return (_index >= 0 and _index < _size)
 
 
-# 从数组中删除指定索引到头部的数据
-static func array_remove_to_front(_array: Array, _index: int):
-	var count = _index + 1
-	if array_check_count_ok(_array, count):
-		for i in range(count):
-			_array.pop_front()
+# 重置数组大小，保留从索引到头部的数据，index 超出范围返回 false
+static func array_resize_to_front(_array: Array, _index: int) -> bool:
+	if not array_check_index_ok(_array.size(), _index):
+		return false
+	return (_array.resize(_index + 1) == OK)
 
 
-# 从数组中删除指定索引到尾部的数据
-static func array_remove_to_back(_array: Array, _index: int):
-	var count = _array.size() - _index
-	if array_check_count_ok(_array, count):
-		for i in range(count):
-			_array.pop_back()
+# 重置数组大小，保留从索引到部的数据，index 超出范围返回 false
+static func array_remove_to_back(_array: Array, _index: int) -> bool:
+	if not array_check_index_ok(_array.size(), _index):
+		return false
+	_array.reverse()
+	var is_ok = false
+	if (_array.resize(_array.size() - _index) == OK):
+		_array.reverse()
+		is_ok = true
+	return is_ok
 
 
 # 从数组中删除指定索引范围的数据
 static func array_remove_range(_array: Array, _index: int, _count: int):
-	if array_check_count_ok(_array, _index + _count):
+	if array_check_count_ok(_array.size(), _index + _count):
 		for i in range(_count):
 			_array.remove_at(_index)
+
+
+# 基础实现 计算C点坐标是a，b点的延长线，距离为distance的点
+static func _find_point_at_distance_base(a, b, distance: float):
+	# 计算从A到B的方向向量
+	var direction = b - a
+	# 如果A和B是同一个点，不能计算方向向量，返回B点
+	if direction is Vector2:
+		if direction == Vector2.ZERO:
+			return b
+	elif direction is Vector3:
+		if direction == Vector3.ZERO:
+			return b
+	# 标准化方向向量
+	var normalized_direction = direction.normalized()
+	# 缩放方向向量
+	var scaled_direction = normalized_direction * distance
+	# 计算点C的坐标
+	var c = b + scaled_direction
+	return c
+
+
+# 2D 计算C点坐标是a，b点的延长线，距离为distance的点
+static func find_point_at_distance_2d(a: Vector2, b: Vector2, distance: float) -> Vector2:
+	return _find_point_at_distance_base(a, b, distance)
+
+
+# 3D 计算C点坐标是a，b点的延长线，距离为distance的点
+static func find_point_at_distance_3d(a: Vector3, b: Vector3, distance: float) -> Vector3:
+	return _find_point_at_distance_base(a, b, distance)
+
+
+# 基础实现 计算C点坐标是a，b点的延长线，缩放距离的点
+static func _find_point_on_extended_line_base(a, b, scale: float):
+	# 计算从A到B的方向向量
+	var direction = b - a
+	# 缩放方向向量
+	var scaled_direction = direction * scale
+	# 计算点C的坐标
+	var c = b + scaled_direction
+	return c
+
+
+# 2D 计算C点坐标是a，b点的延长线，缩放距离的点
+static func find_point_on_extended_line_2d(a: Vector2, b: Vector2, scale: float) -> Vector2:
+	return _find_point_on_extended_line_base(a, b, scale)
+
+
+# 3D 计算C点坐标是a，b点的延长线，缩放距离的点
+static func find_point_on_extended_line_3d(a: Vector3, b: Vector3, scale: float) -> Vector3:
+	return _find_point_on_extended_line_base(a, b, scale)
