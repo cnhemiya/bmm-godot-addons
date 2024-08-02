@@ -157,3 +157,41 @@ static func find_point_on_extended_line_2d(a: Vector2, b: Vector2, scale: float)
 # 3D 计算C点坐标是a，b点的延长线，缩放距离的点
 static func find_point_on_extended_line_3d(a: Vector3, b: Vector3, scale: float) -> Vector3:
 	return _find_point_on_extended_line_base(a, b, scale)
+
+
+# 2D 随机生成网格点
+static func random_grid_point_2d(min_pos: Vector2i, max_pos: Vector2i, 
+		no_has: Array[Vector2i], size: int = 1, append_no_has: bool = true) -> Array[Vector2i]:
+	var max_size: int = abs((max_pos.x - min_pos.x) * (max_pos.y - min_pos.y))
+	assert(max_size >= size, "备选点数小于 size， 备选点数： %d" % max_size)
+	var no_has_new: Array[Vector2i] = no_has
+	var points: Array[Vector2i]
+	while points.size() < size:
+		var x = randi_range(min_pos.x, max_pos.x)
+		var y = randi_range(min_pos.y, max_pos.y)
+		var p = Vector2i(x, y)
+		if not p in no_has_new:
+			points.append(p)
+			if append_no_has:
+				no_has_new.append(p)
+	return points
+
+
+# 3D 随机生成网格点
+static func random_grid_point_3d(min_pos: Vector3i, max_pos: Vector3i, 
+		no_has: Array[Vector3i], size: int = 1, append_no_has: bool = true) -> Array[Vector3i]:
+	var max_size: int = abs((max_pos.x - min_pos.x) * 
+			(max_pos.y - min_pos.y) * (max_pos.z - min_pos.z))
+	assert(max_size >= size, "备选点数小于 size， 备选点数： %d" % max_size)
+	var no_has_new: Array[Vector3i] = no_has
+	var points: Array[Vector3i]
+	while points.size() < size:
+		var x = randi_range(min_pos.x, max_pos.x)
+		var y = randi_range(min_pos.y, max_pos.y)
+		var z = randi_range(min_pos.z, max_pos.z)
+		var p = Vector3i(x, y, z)
+		if not p in no_has_new:
+			points.append(p)
+			if append_no_has:
+				no_has_new.append(p)
+	return points
